@@ -1,13 +1,13 @@
-import { FormEvent } from "react";
+import { FormEvent, useEffect } from "react";
 import { Row, Col, Form, FormGroup, Label, Input, Button } from "reactstrap";
 
 export interface FormProps {
   titleInput: string | undefined;
-  note: string | undefined;
-  notesGroup?: FormEvent<HTMLFormElement> | undefined;
+  note: string;
+  group?: [];
   setTitleInput: (value: string) => void;
   setNote: (value: string) => void;
-  setNotesGroup?: (e: FormEvent<HTMLFormElement>) => void;
+  setGroup?: ([]: any) => void;
 }
 
 const NotesForm = ({
@@ -15,25 +15,22 @@ const NotesForm = ({
   setTitleInput,
   setNote,
   note,
-  notesGroup,
-  setNotesGroup,
+  setGroup,
+  group,
 }: FormProps) => {
   const createNote = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.target as HTMLFormElement;
-    const titleInput = form.querySelector("#titleInput") as HTMLInputElement;
-    const note = form.querySelector("#note") as HTMLInputElement;
-    setTitleInput(titleInput.value);
-    setNote(note.value);
-    console.log(titleInput.value);
-    console.log(note.value);
-  };
+    const title = form.querySelector("#titleInput") as HTMLInputElement;
+    const noteText = form.querySelector("#note") as HTMLInputElement;
+    setTitleInput(title.value);
+    setNote(noteText.value);
 
-  const clearInputs = () => {
+    // setGroup([...group, { title: titleInput, noteText: note }]);
     setTitleInput("");
     setNote("");
-    console.log(titleInput);
-    console.log(note);
+    console.log(title.value);
+    console.log(noteText.value);
   };
 
   return (
@@ -42,19 +39,29 @@ const NotesForm = ({
         <Form onSubmit={(e) => createNote(e)}>
           <FormGroup>
             <Label for="titleInput">Title:</Label>
-            <Input id="titleInput" name="text" type="text" />
+            <Input
+              id="titleInput"
+              name="text"
+              type="text"
+              placeholder="Note Title"
+            />
           </FormGroup>
           <FormGroup>
             <Label for="note">Note:</Label>
-            <Input id="note" name="text" type="textarea" />
+            <Input
+              id="note"
+              name="text"
+              type="textarea"
+              placeholder="Write some thoughts"
+            />
           </FormGroup>
 
           <div>
             <Button
               type="submit"
               color="primary"
+              onClick={(e) => createNote}
               className="mx-2"
-              onClick={clearInputs}
             >
               Save
             </Button>

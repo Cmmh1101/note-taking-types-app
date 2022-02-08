@@ -18,6 +18,7 @@ import NotesForm from "./components/NotesForm";
 const Home = () => {
   const [titleInput, setTitleInput] = useState("");
   const [note, setNote] = useState("");
+  const [group, setGroup] = useState<[]>([]);
 
   return (
     <>
@@ -33,9 +34,16 @@ const Home = () => {
           note={note}
           setTitleInput={setTitleInput}
           setNote={setNote}
+          group={group}
+          setGroup={setGroup}
         />
 
-        <NotesDisplay />
+        <NotesDisplay
+          titleInput={titleInput}
+          note={note}
+          setTitleInput={setTitleInput}
+          setNote={setNote}
+        />
       </Container>
     </>
   );
